@@ -1,0 +1,19 @@
+{
+  "name": "Practic-blocks",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "node",
+  "forwardPorts": [5173],
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Vue.volar",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "vitest.explorer"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:cached
+      - node_modules:/workspace/node_modules
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    env_file:
+      - path: .env
+        required: false
+    # Keep the container alive for the DevContainer; run commands with `docker compose exec`
+    command: sleep infinity
+
+volumes:
+  node_modules:
