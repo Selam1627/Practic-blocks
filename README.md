@@ -2,7 +2,7 @@
 
 A one-page practice website for a precast concrete block company.
 
-> Status: project setup. No application code yet.
+> Status: project skeleton. Placeholder page only; features start with the first user story.
 
 ## Tech stack
 
@@ -30,23 +30,52 @@ All other tooling (Node.js, npm, etc.) runs inside the container.
    cd Practic-blocks
    git checkout develop
    ```
-2. Open the folder in VS Code and choose **Dev Containers: Reopen in Container**.
-3. Once the container is built, install dependencies and start the dev server:
+2. Optionally copy the environment file and adjust the values:
    ```bash
-   npm install
-   npm run dev
+   cp .env.example .env
    ```
 
-## Planned scripts
+### Option A: VS Code DevContainer (recommended)
 
-These will be available once the project is scaffolded:
+1. Open the folder in VS Code and choose **Dev Containers: Reopen in Container**.
+   `npm install` runs automatically when the container is created.
+2. In the VS Code terminal (inside the container):
+   ```bash
+   npm run dev        # http://localhost:5173
+   npm run test:run   # run the tests once
+   ```
 
-| Command           | Description                          |
-| ----------------- | ------------------------------------ |
-| `npm run dev`     | Start the Vite dev server            |
-| `npm run build`   | Type-check and build for production  |
-| `npm run preview` | Preview the production build locally |
-| `npm run test`    | Run unit tests with Vitest           |
+### Option B: Docker Compose only
+
+```bash
+docker compose up -d --build                # start the container
+docker compose exec app npm install         # first time only
+docker compose exec app npm run dev         # http://localhost:5173 (Ctrl+C to stop)
+docker compose exec app npm run test:run    # run the tests once
+docker compose down                         # stop the container
+```
+
+## Scripts
+
+| Command              | Description                              |
+| -------------------- | ---------------------------------------- |
+| `npm run dev`        | Start the Vite dev server on port 5173   |
+| `npm run build`      | Type-check and build for production      |
+| `npm run preview`    | Preview the production build             |
+| `npm run test`       | Run Vitest in watch mode                 |
+| `npm run test:run`   | Run the tests once                       |
+| `npm run type-check` | Type-check with `vue-tsc`                |
+
+## Project structure
+
+```
+.devcontainer/      VS Code DevContainer config (uses docker-compose.yml)
+src/                Application source (App.vue, main.ts, assets/)
+tests/              Vitest tests (*.spec.ts)
+Dockerfile          Node 24 development image
+docker-compose.yml  Dev service; node_modules lives in a named volume
+.env.example        Environment variable template
+```
 
 ## Contributing
 
